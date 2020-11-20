@@ -6,10 +6,11 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var lavadoActivos = require('./routes/API/LavadoActivos');
+var lavadoActivos = require('./routes/API/LavadoActivos'); //e enlaza donde se encuentra la logica y posibles urls de la API
 
 var app = express();
 
+//Se crea la estructura para la conección de mongoDB con la API
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb+srv://FaktorRiskUser:FaktorRiskProject@clusterprincipal.issc3.gcp.mongodb.net/FaktorRisk?retryWrites=true&w=majority';
 mongoose.set('useUnifiedTopology', true);
@@ -32,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/activos', lavadoActivos);
+app.use('/activos', lavadoActivos); //Se crea la primera ramificación de la API
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

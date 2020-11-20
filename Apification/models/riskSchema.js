@@ -1,6 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose'); //Driver necesario para conectar con MongoDB, ayuda a la hora insertar y realizar consultas
+var Schema = mongoose.Schema; //Se usa la opción de es  uema dee validación de mongoose
 
+/**
+ * Variable que tiene una la información de la validación de los datos antes de guardarlos en la BD
+ */
 var riesgoSchema = new Schema({
     id_user: {
         type: Number,
@@ -72,4 +75,4 @@ var riesgoSchema = new Schema({
     frecuencia: String
 })
 
-module.exports = mongoose.model('Riesgos', riesgoSchema);
+module.exports = mongoose.model('Riesgos', riesgoSchema); //Se exporta el modelo para su uso por todos

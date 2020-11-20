@@ -13,9 +13,11 @@ exports.risk_list = function(req, res) {
     });
 }
 
-/***
- * Método encargado de guadar la información de un riesgo de lavado de activos, esta se asocia a un usuario en especifico
- * Indica si existio un error o si fue guardado
+/**
+ * Método encargado de guadar la información de un riesgo de lavado de activos, 
+ * esta se asocia a un usuario en especifico
+ * @param {id} req Se obtiene el Id del usaio a quien se le asociaria el riesgo a guardar 
+ * @param {*} res Se envia un mensaje si la acción fue exitosa o existió un error
  */
 exports.riesgo_create = function(req, res) {
     var riesgo = new Riesgo({
@@ -54,6 +56,12 @@ exports.riesgo_create = function(req, res) {
 
 }
 
+/**
+ * Método encargado de trae un riesgo en especifico y de un  especifico usuario
+ * 
+ * @param {id, code} req Se obtiene el id del usario y el codigo de riesgo a buscar 
+ * @param {*} res Se envia la información del riesgo a consultar o si existió un error
+ */
 exports.riesgo_getOne = function(req, res) {
     Riesgo.findOne({ id_user: req.params.id, code: req.params.code }, (err, data) => {
         if (err) res.status(500).json({
@@ -65,6 +73,12 @@ exports.riesgo_getOne = function(req, res) {
     });
 }
 
+/**
+ *  * Método que se encarga de eliminar un riesgo en especifico y de un especifico usuario
+ * Primero busca si ese riesgo en especifico existe existe y despúes lo elimina
+ * @param {*} req Se envia el el id del usaurio y el codigo del riesgo
+ * @param {*} res Se responde si fue exitosa la operación o existio un error
+ */
 exports.riesgo_deleteOne = function(req, res) {
     Riesgo.findOneAndRemove({ id_user: req.params.id, code: req.params.code }, (err, data) => {
         if (err) res.status(500).json({
@@ -81,6 +95,11 @@ exports.riesgo_deleteOne = function(req, res) {
     });
 }
 
+/**
+ * Método encargado de actualizar la información de un riesgo 
+ * @param {id, code} req Se obtiene el id del usuario, el código del riesgo y la información a actualizar
+ * @param {*} res Se responde si la acción fue exitosa o existió algún error
+ */
 exports.riesgo_updateOne = function(req, res) {
     Riesgo.findOneAndUpdate({ id_user: req.params.id, code: req.params.code }, {
         proceso_asociado: req.body.proceso_asociado,
@@ -112,6 +131,12 @@ exports.riesgo_updateOne = function(req, res) {
     });
 }
 
+/**
+ * Método encargado de obtener a información relevenate de todos los riesgos de un usuario en especifico, 
+ * para realizar un mapeo de estos
+ * @param {id} req Se obtiene el id del usuario al que se le bede realzar la consulta
+ * @param {*} res Se envia el resultado de la consulta en la BD
+ */
 exports.map_risk = function(req, res) {
     Riesgo.aggregate(
         [{
@@ -138,6 +163,12 @@ exports.map_risk = function(req, res) {
             else res.send(data)
         });
 }
+
+/**
+ * Método encargado de obtener la información relevante de los reisgos de un usario en especifico para realizar un informe gerencial
+ * @param {id} req Se obtiene el id del usario al que se le tiene que realizar la consulta 
+ * @param {*} res Se envia el resultado de la consulta.
+ */
 exports.gerential_inform = function(req, res) {
     Riesgo.aggregate(
         [{
